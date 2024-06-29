@@ -115,11 +115,16 @@ const AssetChart = () => {
       setSearchTerm(tempSearchTerm);
       setAssetType(tempAssetType);
       setTimeframe(tempTimeframe);
-      fetchAssetData(tempSearchTerm, tempAssetType);
     } else {
       setErrorMessage('Please enter a valid asset symbol.');
     }
   };
+
+  useEffect(() => {
+    if (searchTerm) {
+      fetchAssetData(searchTerm, assetType);
+    }
+  }, [searchTerm, assetType, timeframe]);
 
   const handleAssetTypeChange = (event) => {
     setTempAssetType(event.target.value);
@@ -202,9 +207,9 @@ const AssetChart = () => {
         <Grid item xs={12}>
           <Card sx={{ p: 3, borderRadius: '16px', boxShadow: '6px 4px 18px 8px rgba(0,0,0,0.3)' }}>
             <CardContent>
-            <Typography variant="h4" align="center" fontWeight="Bold" gutterBottom>
-              Browse Assets
-            </Typography>
+              <Typography variant="h4" align="center" fontWeight="Bold" gutterBottom>
+                Browse Assets
+              </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                 <RadioGroup row value={tempAssetType} onChange={handleAssetTypeChange}>
                   <FormControlLabel value="crypto" control={<Radio />} label="Crypto" />
